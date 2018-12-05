@@ -10,10 +10,6 @@ module TransactionalChanges
     after_commit :reset_current_transaction_changes
   end
 
-  def attribute_had_changed?(attr)
-    @transaction_changes[attr.to_s].present?
-  end
-
   def keys_changed
     @transaction_changes.keys
   end
@@ -28,25 +24,32 @@ module TransactionalChanges
 
   private
 
+  def attribute_had_changed?(attr)
+    @transaction_changes[attr.to_s].present?
+  end
+
   def track_changes
-    @new_transaction_changes ||= HashWithIndifferentAccess.new
+    if !@is_transaction_dirty
+      @is_transaction_dirty = true;
+      @transaction_changes = HashWithIndifferentAccess.new
+    end
 
     self.changes.each do |key, value|
       #This is to track all the changes to a particular attribute in a transaction.
-      if @new_transaction_changes[key].present?
-        @new_transaction_changes[key] << value.second
+      if @transaction_changes[key].present?
+        @transaction_changes[key] << value.second
       else
-        @new_transaction_changes[key] = value
+        @transaction_changes[key] = value
       end
     end
   end
 
   def reset_current_transaction_changes
-    @transaction_changes = @new_transaction_changes
-    @new_transaction_changes  = HashWithIndifferentAccess.new
+    @is_transaction_dirty = false;
   end
 
   def reset_previous_transaction_changes
     @transaction_changes = HashWithIndifferentAccess.new
+    @is_transaction_dirty = false;
   end
 end
