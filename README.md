@@ -1,11 +1,9 @@
 # TransactionalChanges
 
-This gem provides all the changes that has been made in a transaction.
+This gem provides all the changes that has been made in a transaction.  
 FYR, `ActiveModel::Dirty` provides a method `previous_changes` which only shows the last change that has been made. "https://api.rubyonrails.org/classes/ActiveModel/Dirty.html"
 
 ## Installation
-
-Add this line to your application's Gemfile:
 
 ```ruby
 gem 'transactional_changes'

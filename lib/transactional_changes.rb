@@ -42,6 +42,7 @@ module TransactionalChanges
         @transaction_changes[key] = value
       end
     end
+    @transaction_changes = @transaction_changes.reject { |k,v| v.first == v.last }
   end
 
   def reset_current_transaction_changes

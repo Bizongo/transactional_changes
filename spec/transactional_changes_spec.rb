@@ -1,5 +1,4 @@
 require "active_record"
-require "pry"
 require "spec_helper_models"
 require "transactional_changes"
 
