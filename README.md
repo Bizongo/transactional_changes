@@ -6,7 +6,7 @@ FYR, `ActiveModel::Dirty` provides a method `previous_changes` which only shows 
 ## Installation
 
 ```ruby
-gem 'transactional_changes'
+gem 'transactional_changes', git: "git@github.com:Bizongo/transactional_changes.git"
 ```
 
 And then execute:
