@@ -20,20 +20,24 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
+class Dummy
+  include TransactionalChanges
+end
+
 dummy = Dummy.new
 dummy.name_had_changed? # => false
 
-dummy.name = "Vikash"
+dummy.name = “Wade”
 dummy.save!
 dummy.name_had_changed? # => true
 
 ActiveRecord::Base.transaction do
-  dummy.name = "Vikash Singh"
+  dummy.name = “DeadPool”
   dummy.save!
-  dummy.slug = "bla bla"
+  dummy.slug = “bla bla”
   dummy.save!
 end
 
-dummy.transaction_changes
-{"name"=>["Vikash", "Vikash Singh"], "slug"=>[nil, "bla bla"], "updated_at"=>[Wed, 05 Dec 2018 12:34:04 IST +05:30, Wed, 05 Dec 2018 12:54:31 IST +05:30, Wed, 05 Dec 2018 12:54:31 IST +05:30]}
+dummy.transaction_changes #=>
+{“name”=>[“Wade”, “DeadPool”], “slug”=>[nil, “bla bla”], “updated_at”=>[Mon, 04 Feb 2019 01:27:33 IST +05:30, Mon, 18 Mar 2019 01:28:05 IST +05:30, Mon, 184 Mar 2019 01:28:05 IST +05:30]}
 ```
